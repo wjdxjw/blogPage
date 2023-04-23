@@ -41,3 +41,11 @@ jobs:
           password: ${{secrets.PASSWORD}}
           source: dist/.
           target: /dist/
+      - name: 在服务器上执行脚本操作
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          script: |
+            cp /dist/dist /usr/share/nginx/html
