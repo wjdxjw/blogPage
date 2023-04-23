@@ -1,0 +1,43 @@
+#name是 工作流的名称。 GitHub 在存储库的“操作”选项卡上显示工作流的名称
+name: 自动化部署静态
+
+# on是事件监听的意思；其中push的意思就是
+on:
+  push:
+    # branches是分支名；意思是在哪一个分支进行工作
+    branches:
+      # 这里是在buid分支进行工作
+      - build
+    # tags是打标签的意思
+    tags:
+      # 2*代表2开头的标签
+      - 2*
+# jobs 工作的意思。就是要做的事情，定义好的，写死的；
+jobs:
+  # build 工作的名字，随意即可；就是给我们workflow工作的时候，定义一个名字
+  build:
+    # runs-on 是运行作业的计算机类型；可以理解成就是在什么环境下的计算机类型；比如linux；window等
+    runs-on: ubuntu-latest # 运行环境
+    # steps 步骤；就是我们工作名为build的任务，需要做哪些操作，可以多个
+    steps:
+      # name 步骤的名字
+      - name: 签出代码
+        # uses使用的插件或为作业运行的可重用工作流程文件的位置和版本
+        uses: actions/checkout@master
+      - name: 安装 nodejs
+        uses: actions/setup-node@v2
+        # with代表作业用于调用可重用工作流时，可以使用 with 来提供传递到被调用工作流的输入的映射
+        with:
+          node-version: "16"
+      - name: 安装依赖
+        run: npm install
+      - name: 前端项目打包
+        run: npm run build
+      - name: 登录到云服务器上并传输对应的文件
+        uses: appleboy/scp-action@master
+        with:
+          host: wtianh
+          username: root
+          password: 999999
+          source: /dist
+          target: /dist
