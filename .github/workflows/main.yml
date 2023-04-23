@@ -48,4 +48,4 @@ jobs:
           username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
           script: |
-            cp /dist/dist /usr/share/nginx/html
+            cp -r /dist/dist /usr/share/nginx/html/blog-page
