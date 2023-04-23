@@ -49,4 +49,4 @@ jobs:
           password: ${{secrets.PASSWORD}}
           script: |
             cp -r /dist/dist /usr/share/nginx/html/blog-page
-            rm -rf /dist/dist
+            rm -rf /dist
