@@ -36,8 +36,8 @@ jobs:
       - name: 登录到云服务器上并传输对应的文件
         uses: appleboy/scp-action@master
         with:
-          host: wtianh
-          username: root
-          password: 999999
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
           source: /dist
           target: /dist
